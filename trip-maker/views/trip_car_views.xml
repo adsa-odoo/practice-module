@@ -1,0 +1,68 @@
+<odoo>
+    <record id="trip_car_action" model="ir.actions.act_window">
+        <field name="name">Cars</field>
+        <field name="res_model">trip.car</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            No record
+          </p>
+        </field>
+    </record>
+    <record id="trip_car_views_tree" model="ir.ui.view">
+        <field name="name">trip.car.tree</field>
+        <field name="model">trip.car</field>
+        <field name="arch" type="xml">
+            <tree string="Channel">
+                <field name="name"/>
+                <field name="capacity"/> 
+                <field name="cost_per_km"/>
+                <field name="is_available"/>
+            </tree>
+        </field>
+    </record>
+    <record id="trip_car_view_form" model="ir.ui.view">
+        <field name="name">trip.car.form</field>
+        <field name="model">trip.car</field>
+        <field name="arch" type="xml">
+            <form string="Channel">
+                <sheet>
+                        <div>
+                            <h1>
+                                <field name="name" class="oe_inline"/>
+                            </h1>
+                        </div>
+                    <group>    
+                        <group>
+                            <field name="capacity"/>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <group col="3">
+                                    <field name="cost_per_km"/>
+                                    <field name="is_available"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="trip_car_view_search" model="ir.ui.view">
+        <field name="name">trip.car.search</field>
+        <field name="model">trip.car</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="capacity" />
+                <filter string="Available" name="is_available" domain="[('is_available','=','True')]"/>
+                <filter string="Large" name="capacity" domain="[('capacity','>=','6')]"/>
+                <filter string="Cheaper" name="cost_per_km" domain="[('cost_per_km','&lt;','40')]"/>
+                <group string="Group By">
+                    <filter name="is_available" string="Availability" context="{'group_by': 'is_available'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

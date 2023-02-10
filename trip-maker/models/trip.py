@@ -5,7 +5,9 @@ class Trip(models.Model):
     _description = "Trip model"
 
     name = fields.Char()
-    origin = fields.Char()
+    origin = fields.Char(default = "Ahmedabad")
     destination = fields.Char()
     schedule = fields.Date()
-    distance = fields.Float()
+    distance = fields.Float("Distance (km)")
+    members = fields.Integer("Total members")
+    

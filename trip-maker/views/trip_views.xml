@@ -3,6 +3,11 @@
         <field name="name">Trips</field>
         <field name="res_model">trip</field>
         <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            No record
+          </p>
+        </field>
     </record>
     <record id="trips_view_tree" model="ir.ui.view">
         <field name="name">trip.tree</field>
@@ -46,5 +51,21 @@
             </form>
         </field>
     </record>
-    <!---->
+    <record id="trip_view_search" model="ir.ui.view">
+        <field name="name">trip.search</field>
+        <field name="model">trip</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="origin" />
+                <field name="destination" />
+                <filter name="distance" string="Long Distance" domain="[('distance','>','30')]"/>
+                <filter name="distance" string="Short Distance" domain="[('distance','&lt;=','30')]"/>
+                <group string="Group By">
+                    <filter name="destination" string="Destination" context="{'group_by' : 'destination'}"/>
+                    <filter name="schedule" string="Schedule" context="{'group_by' : 'schedule'}"/>
+                </group>
+            </search>
+        </field>
+    </record> 
 </odoo>

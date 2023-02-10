@@ -2,6 +2,7 @@
     <menuitem id="trip_menu_root" name="Trip Maker">
         <menuitem id="trip_first_level_menu" name="Trips">
             <menuitem id="trip_menu_action" action="trips_action"/>
+            <menuitem id="trip_car_menu_action" action="trip_car_action"/>
         </menuitem>
     </menuitem>
 </odoo>
