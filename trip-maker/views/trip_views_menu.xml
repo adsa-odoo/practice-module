@@ -1,0 +1,7 @@
+<odoo>
+    <menuitem id="trip_menu_root" name="Trip Maker">
+        <menuitem id="trip_first_level_menu" name="Trips">
+            <menuitem id="trip_menu_action" action="trips_action"/>
+        </menuitem>
+    </menuitem>
+</odoo>
