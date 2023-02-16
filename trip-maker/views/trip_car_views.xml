@@ -15,8 +15,9 @@
         <field name="arch" type="xml">
             <tree string="Channel">
                 <field name="name"/>
-                <field name="capacity"/> 
-                <field name="cost_per_km"/>
+                <field name="capacity" /> 
+                <field name="cost_per_km" width="300px" />
+                <field name="trip_id" width="300px" />
                 <field name="is_available"/>
             </tree>
         </field>

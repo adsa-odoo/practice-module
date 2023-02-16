@@ -1,7 +1,7 @@
 <odoo>
     <record id="trips_action" model="ir.actions.act_window">
         <field name="name">Trips</field>
-        <field name="res_model">trip</field>
+        <field name="res_model">trip.trip</field>
         <field name="view_mode">tree,form</field>
         <field name="help" type="html">
           <p class="o_view_nocontent_smiling_face">
@@ -10,40 +10,52 @@
         </field>
     </record>
     <record id="trips_view_tree" model="ir.ui.view">
-        <field name="name">trip.tree</field>
-        <field name="model">trip</field>
+        <field name="name">trip.trip.tree</field>
+        <field name="model">trip.trip</field>
         <field name="arch" type="xml">
-            <tree string="Channel" expand="1">
-                <field name="name"/>
+            <tree string="Channel" expand="1" default_order = "schedule">
                 <field name="schedule"/> 
                 <field name="origin"/>
                 <field name="destination"/>
+                <field name="cost" />
                 <field name="distance"/> 
             </tree>
         </field>
     </record>
     <record id="trip_view_form" model="ir.ui.view">
-        <field name="name">trip.form</field>
-        <field name="model">trip</field>
+        <field name="name">trip.trip.form</field>
+        <field name="model">trip.trip</field>
         <field name="arch" type="xml">
             <form string="Channel">
+                <header>
+                    <button name="action_pending" type="object" string="PENDING"/>
+                    <button name="action_progress" type="object" string="IN PROGRESS"/>
+                    <button name="action_done" type="object" string="DONE"/>
+                </header>
                 <sheet>
                         <div>
                             <h1>
-                                <field name="name" class="oe_inline"/>
+                                <field name="name" />
                             </h1>
                         </div>
                     <group>    
                         <group>
                             <field name="schedule"/>
                         </group>
+                        <group>
+                            <field name="status"/>
+                        </group>
                         <notebook>
                             <page string="Description">
                                 <group col="3">
-                                    <field name="origin"/>
+                                    <field name="origin" />
                                     <field name="destination"/>
                                     <field name="distance"/>
+                                    <field name="cost" />
                                 </group>
+                            </page>
+                            <page string="Cars">
+                                <field name="car_ids" />
                             </page>
                         </notebook>
                     </group>
@@ -52,8 +64,8 @@
         </field>
     </record>
     <record id="trip_view_search" model="ir.ui.view">
-        <field name="name">trip.search</field>
-        <field name="model">trip</field>
+        <field name="name">trip.trip.search</field>
+        <field name="model">trip.trip</field>
         <field name="arch" type="xml">
             <search>
                 <field name="name" />

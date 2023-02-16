@@ -8,3 +8,4 @@ class TripCar(models.Model):
     capacity = fields.Integer(default = 4)
     cost_per_km = fields.Float("Cost per km")
     is_available = fields.Boolean(default = True)
+    trip_id = fields.Many2one("trip.trip")
