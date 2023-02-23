@@ -13,12 +13,13 @@
         <field name="name">trip.trip.tree</field>
         <field name="model">trip.trip</field>
         <field name="arch" type="xml">
-            <tree string="Channel" expand="1" default_order = "schedule">
+            <tree string="Channel" expand="1" default_order = "schedule" decoration-success="state == 'progress' or state == 'done'" decoration-bf="state == 'done'" decoration-danger="state == 'cancel'">
                 <field name="schedule"/> 
                 <field name="origin"/>
                 <field name="destination"/>
                 <field name="cost" />
                 <field name="distance"/> 
+                <field name="state" invisible="1"/> 
             </tree>
         </field>
     </record>
@@ -28,9 +29,11 @@
         <field name="arch" type="xml">
             <form string="Channel">
                 <header>
-                    <button name="action_pending" type="object" string="PENDING"/>
-                    <button name="action_progress" type="object" string="IN PROGRESS"/>
-                    <button name="action_done" type="object" string="DONE"/>
+                    <button name="action_pending" type="object" string="PENDING" attrs="{'invisible' : [('state','=','done')]}"/>
+                    <button name="action_progress" type="object" string="IN PROGRESS" attrs="{'invisible' : [('state','=','done')]}"/>
+                    <button name="action_done" type="object" string="DONE" attrs="{'invisible' : [('state','=','done')]}"/>
+                    <button name="action_cancel" type="object" string="CANCEL" attrs="{'invisible' : [('state','=','done')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible = "pending,progress,done"/>
                 </header>
                 <sheet>
                         <div>
@@ -38,24 +41,36 @@
                                 <field name="name" />
                             </h1>
                         </div>
-                    <group>    
+                    <group>   
                         <group>
                             <field name="schedule"/>
                         </group>
                         <group>
-                            <field name="status"/>
+                            <field name="state"/>
                         </group>
                         <notebook>
                             <page string="Description">
                                 <group col="3">
                                     <field name="origin" />
                                     <field name="destination"/>
-                                    <field name="distance"/>
+                                    <field name="distance"/> 
                                     <field name="cost" />
+                                    <field name="members" />
                                 </group>
                             </page>
                             <page string="Cars">
-                                <field name="car_ids" />
+                                <field name="car_ids" domain="[('is_available','=','True')]">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="cost_per_km"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Other Info">
+                                <group>
+                                    <field name="hotel_id" string="Hotel"/>
+                                    <field name="halt"/>
+                                </group>
                             </page>
                         </notebook>
                     </group>

@@ -3,6 +3,7 @@
         <field name="name">Cars</field>
         <field name="res_model">trip.car</field>
         <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_available': True}</field>
         <field name="help" type="html">
           <p class="o_view_nocontent_smiling_face">
             No record
@@ -17,7 +18,6 @@
                 <field name="name"/>
                 <field name="capacity" /> 
                 <field name="cost_per_km" width="300px" />
-                <field name="trip_id" width="300px" />
                 <field name="is_available"/>
             </tree>
         </field>
@@ -57,7 +57,7 @@
             <search>
                 <field name="name" />
                 <field name="capacity" />
-                <filter string="Available" name="is_available" domain="[('is_available','=','True')]"/>
+                <filter string="Available" name="available" domain="[('is_available','=','True')]"/>
                 <filter string="Large" name="capacity" domain="[('capacity','>=','6')]"/>
                 <filter string="Cheaper" name="cost_per_km" domain="[('cost_per_km','&lt;','40')]"/>
                 <group string="Group By">
