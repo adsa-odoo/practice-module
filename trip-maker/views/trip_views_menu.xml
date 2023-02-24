@@ -7,5 +7,8 @@
         <menuitem id="trip_hotels_menu" name="Hotels">
             <menuitem id="trip_hotels_action_menu" action="trip_hotels_action" />
         </menuitem>
+        <menuitem id="trip_car_tag_menu" name="Settings">
+            <menuitem id="trip_car_tag_action_menu" action="trip_car_tag_action" />
+        </menuitem>
     </menuitem>
 </odoo>

@@ -13,7 +13,7 @@
         <field name="name">trip.hotels.tree</field>
         <field name="model">trip.hotels</field>
         <field name="arch" type="xml">
-            <tree string="Channel" expand="1">
+            <tree string="Channel" expand="1" editable="bottom">
                 <field name="name"/> 
                 <field name="location"/>
                 <field name="ratings" widget="priority"/>
@@ -39,6 +39,16 @@
                 <field name="cost_per_room"/>
                 <field name="is_available"/>
               </group>
+              <notebook>
+                  <page string="Trips">
+                      <field name="trip_ids">
+                        <tree decoration-success="state == 'progress' or state == 'done'">
+                          <field name="name"/>
+                          <field name="state"/>
+                        </tree>
+                      </field>
+                  </page>
+              </notebook>
             </sheet>
           </form>
         </field>

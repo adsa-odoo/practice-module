@@ -5,6 +5,7 @@ from dateutil.relativedelta import relativedelta
 class TripTrip(models.Model):
     _name = "trip.trip"
     _description = "Trip model"
+    _order = "schedule"
 
     name = fields.Char(compute="_compute_name")
     origin = fields.Char(default="Ahmedabad", required=True)
@@ -16,8 +17,10 @@ class TripTrip(models.Model):
     cost = fields.Float("Cost (Rs.)", compute="_compute_cost")
     state = fields.Selection(selection=[('pending', 'Pending'), ('progress', 'In Progress'), (
         'done', 'Done'), ('cancel', 'Cancel')], default="pending", readonly=True)
+    is_hotel = fields.Boolean("Book hotel?", default = False)
     hotel_id = fields.Many2one("trip.hotels", string="Hotel")
     halt = fields.Integer(string="Halt (Days)", default=1)
+    active = fields.Boolean(default = True)
 
     @api.depends("origin", "destination")
     def _compute_name(self):
@@ -33,7 +36,8 @@ class TripTrip(models.Model):
             outer_record.cost = 0
             for inner_record in outer_record.car_ids:
                 outer_record.cost += inner_record.cost_per_km * outer_record.distance
-                inner_record.is_available = False
+                if(outer_record.state != "done"):
+                    inner_record.is_available = False
             outer_record.cost += self.hotel_id.cost_per_room * outer_record.halt
 
 
@@ -63,6 +67,8 @@ class TripTrip(models.Model):
                 raise exceptions.UserError("Trip is canceled!")
             else:
                 record.state = "done"
+                for car in record.car_ids:
+                    car.is_available = True
         return True
 
     def action_cancel(self):
@@ -74,6 +80,7 @@ class TripTrip(models.Model):
                 raise exceptions.UserError("Trip is done, can't be canceled!")
             else:
                 record.state = "cancel"
+                record.active = False
         return True
 
     @api.constrains("destination")
@@ -102,3 +109,16 @@ class TripTrip(models.Model):
             if (record.members <= 0):
                 raise exceptions.ValidationError(
                     "Number of members must be positive!")
+    
+    @api.constrains("schedule")
+    def check_schedule(self):
+        for record in self:
+            if(record.schedule  < fields.Date().today()):
+                raise exceptions.ValidationError("The schedule can not be set in the past.")
+
+    @api.constrains("hotel_id")
+    def check_hotel(self):
+        for record in self:
+            if(record.hotel_id.location != record.destination):
+                raise exceptions.ValidationError("Destination is not matching with hotel")
+    

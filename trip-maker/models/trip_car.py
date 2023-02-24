@@ -4,10 +4,12 @@ class TripCar(models.Model):
     _name = "trip.car"
     _description = "Car model"
 
-    name = fields.Char("Car name")
-    capacity = fields.Integer(default = 4)
-    cost_per_km = fields.Float("Cost per km")
+    name = fields.Char("Car name",required = True)
+    capacity = fields.Integer(default = 4,required = True)
+    cost_per_km = fields.Float("Cost per km",required = True)
     is_available = fields.Boolean(default = True)
+    tag_ids = fields.Many2many("trip.car.tag",required = True)
+    trip_id = fields.Many2one("trip.trip")
 
     @api.constrains("cost_per_km")
     def check_cost_per_km(self):

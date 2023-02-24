@@ -17,6 +17,7 @@
             <tree string="Channel">
                 <field name="name"/>
                 <field name="capacity" /> 
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field' : 'color'}"/>
                 <field name="cost_per_km" width="300px" />
                 <field name="is_available"/>
             </tree>
@@ -36,6 +37,7 @@
                     <group>    
                         <group>
                             <field name="capacity"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field' : 'color','no_create' : True}" />
                         </group>
                         <notebook>
                             <page string="Description">
@@ -57,11 +59,16 @@
             <search>
                 <field name="name" />
                 <field name="capacity" />
+                <field name="tag_ids" />
                 <filter string="Available" name="available" domain="[('is_available','=','True')]"/>
                 <filter string="Large" name="capacity" domain="[('capacity','>=','6')]"/>
                 <filter string="Cheaper" name="cost_per_km" domain="[('cost_per_km','&lt;','40')]"/>
+                <field string="Cars by capacity" name="capacity" filter_domain="[('capacity','>=',self)]"/>
                 <group string="Group By">
                     <filter name="is_available" string="Availability" context="{'group_by': 'is_available'}"/>
+                </group>
+                <group string="Group By">
+                    <filter name="capacity" string="Capacity" context="{'group_by': 'capacity'}"/>
                 </group>
             </search>
         </field>

@@ -56,19 +56,20 @@
                                     <field name="distance"/> 
                                     <field name="cost" />
                                     <field name="members" />
+                                    <field name="is_hotel" />
                                 </group>
                             </page>
                             <page string="Cars">
-                                <field name="car_ids" domain="[('is_available','=','True')]">
+                                <field name="car_ids" domain="[('is_available','=','True')]" options="{'no_create': True}">
                                     <tree>
                                         <field name="name"/>
                                         <field name="cost_per_km"/>
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Other Info">
+                            <page string="Other Info" attrs = "{'invisible' : [('is_hotel','=',False)]}">
                                 <group>
-                                    <field name="hotel_id" string="Hotel"/>
+                                    <field name="hotel_id" string="Hotel" options="{'no_create': True}" domain="[('location', '=', destination)]"/>
                                     <field name="halt"/>
                                 </group>
                             </page>
@@ -88,6 +89,7 @@
                 <field name="destination" />
                 <filter name="distance" string="Long Distance" domain="[('distance','>','30')]"/>
                 <filter name="distance" string="Short Distance" domain="[('distance','&lt;=','30')]"/>
+                <filter name="Members" string = "Members" domain="[('members','>',5)]" />
                 <group string="Group By">
                     <filter name="destination" string="Destination" context="{'group_by' : 'destination'}"/>
                     <filter name="schedule" string="Schedule" context="{'group_by' : 'schedule'}"/>

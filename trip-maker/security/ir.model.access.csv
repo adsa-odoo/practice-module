@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 trip-maker.access_trip_trip,access_trip_trip,trip-maker.model_trip_trip,base.group_user,1,1,1,1
 trip-maker.access_trip_car,access_trip_car,trip-maker.model_trip_car,base.group_user,1,1,1,1
 trip-maker.access_trip_hotels,access_trip_hotels,trip-maker.model_trip_hotels,base.group_user,1,1,1,1
+trip-maker.access_trip_car_tag,access_trip_car_tag,trip-maker.model_trip_car_tag,base.group_user,1,1,1,1
