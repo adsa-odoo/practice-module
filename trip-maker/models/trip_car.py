@@ -9,7 +9,7 @@ class TripCar(models.Model):
     cost_per_km = fields.Float("Cost per km",required = True)
     is_available = fields.Boolean(default = True)
     tag_ids = fields.Many2many("trip.car.tag",required = True)
-    trip_id = fields.Many2one("trip.trip")
+    driver_id = fields.Many2one("res.users")
 
     @api.constrains("cost_per_km")
     def check_cost_per_km(self):
@@ -22,3 +22,4 @@ class TripCar(models.Model):
         for record in self:
             if(record.capacity <= 0):
                 exceptions.ValidationError("Capacity must be positive!")
+        

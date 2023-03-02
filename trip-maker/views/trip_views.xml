@@ -47,6 +47,7 @@
                         </group>
                         <group>
                             <field name="state"/>
+                            <field name="seq_name"/>
                         </group>
                         <notebook>
                             <page string="Description">
@@ -60,7 +61,7 @@
                                 </group>
                             </page>
                             <page string="Cars">
-                                <field name="car_ids" domain="[('is_available','=','True')]" options="{'no_create': True}">
+                                <field name="car_ids" domain="[('is_available','=','True')]" attrs="{'readonly': [('state','in',['done','cancel'])]}">
                                     <tree>
                                         <field name="name"/>
                                         <field name="cost_per_km"/>
@@ -84,7 +85,7 @@
         <field name="model">trip.trip</field>
         <field name="arch" type="xml">
             <search>
-                <field name="name" />
+                <field name="seq_name" />
                 <field name="origin" />
                 <field name="destination" />
                 <filter name="distance" string="Long Distance" domain="[('distance','>','30')]"/>

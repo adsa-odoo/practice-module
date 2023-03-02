@@ -17,7 +17,7 @@
                 <field name="name"/> 
                 <field name="location"/>
                 <field name="ratings" widget="priority"/>
-                <field name="is_available"/>
+                <field name="cost_per_room"/>
             </tree>
         </field>
     </record>

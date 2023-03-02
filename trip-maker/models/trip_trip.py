@@ -7,13 +7,15 @@ class TripTrip(models.Model):
     _description = "Trip model"
     _order = "schedule"
 
-    name = fields.Char(compute="_compute_name")
+    name = fields.Char(compute="_compute_name",readonly=True)
+    seq_name = fields.Char(string='Trip Id',readonly=True, default=lambda
+                self: ('New'))
     origin = fields.Char(default="Ahmedabad", required=True)
     destination = fields.Char(required=True)
-    schedule = fields.Date(required=True)
+    schedule = fields.Date(required=True,default = lambda d : fields.Date().today()+relativedelta(days=7))
     distance = fields.Float("Distance (km)", required=True)
     members = fields.Integer("Total members")
-    car_ids = fields.Many2many("trip.car", required=True)
+    car_ids = fields.Many2many("trip.car")
     cost = fields.Float("Cost (Rs.)", compute="_compute_cost")
     state = fields.Selection(selection=[('pending', 'Pending'), ('progress', 'In Progress'), (
         'done', 'Done'), ('cancel', 'Cancel')], default="pending", readonly=True)
@@ -69,6 +71,7 @@ class TripTrip(models.Model):
                 record.state = "done"
                 for car in record.car_ids:
                     car.is_available = True
+                record.car_ids = None
         return True
 
     def action_cancel(self):
@@ -99,7 +102,7 @@ class TripTrip(models.Model):
     @api.constrains("car_ids")
     def check_car_ids(self):
         for record in self:
-            if (not record.car_ids):
+            if (record.state in ['pending','progress'] and not record.car_ids):
                 raise exceptions.ValidationError(
                     "At least one car must be selected!")
 
@@ -119,6 +122,18 @@ class TripTrip(models.Model):
     @api.constrains("hotel_id")
     def check_hotel(self):
         for record in self:
-            if(record.hotel_id.location != record.destination):
+            if(record.is_hotel and record.hotel_id.location != record.destination):
                 raise exceptions.ValidationError("Destination is not matching with hotel")
+            
+    @api.model
+    def create(self,vals):
+        vals['seq_name'] = self.env['ir.sequence'].next_by_code('trip.maker.seq')
+        return super(TripTrip,self).create(vals)
+    
+    @api.ondelete(at_uninstall=False)
+    def _unlink_trip(self):
+        for record in self:
+            if(record.car_ids):
+                for car in record.car_ids:
+                    car.is_available = True
     

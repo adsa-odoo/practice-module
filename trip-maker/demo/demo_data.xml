@@ -1,0 +1,70 @@
+<odoo>
+    <record id="demo_data_car_tag_1" model="trip.car.tag">
+        <field name="name">suv</field>
+    </record>
+    <record id="demo_data_car_tag_2" model="trip.car.tag">
+        <field name="name">sedan</field>
+    </record>
+    <record id="demo_data_car_tag_3" model="trip.car.tag">
+        <field name="name">gas</field>
+    </record>
+    <record id="demo_data_car_tag_4" model="trip.car.tag">
+        <field name="name">petrol</field>
+    </record>
+    <record id="demo_data_car_1" model="trip.car">
+        <field name="name">Alto 800</field>
+        <field name="capacity">4</field>
+        <field name="cost_per_km">10</field>
+        <field name="tag_ids" eval="[(6,0,[ref('demo_data_car_tag_2'),ref('demo_data_car_tag_3')])]" />
+    </record>
+    <record id="demo_data_car_2" model="trip.car">
+        <field name="name">Swift</field>
+        <field name="capacity">4</field>
+        <field name="cost_per_km">10</field>
+        <field name="tag_ids" eval="[(6,0,[ref('demo_data_car_tag_2'),ref('demo_data_car_tag_3')])]" />
+    </record>
+    <record id="demo_data_car_3" model="trip.car">
+        <field name="name">Eeco</field>
+        <field name="capacity">8</field>
+        <field name="cost_per_km">8</field>
+        <field name="tag_ids" eval="[(6,0,[ref('demo_data_car_tag_1'),ref('demo_data_car_tag_3')])]" />
+    </record>
+    <record id="demo_data_car_4" model="trip.car">
+        <field name="name">Innova</field>
+        <field name="capacity">8</field>
+        <field name="cost_per_km">15</field>
+        <field name="tag_ids" eval="[(6,0,[ref('demo_data_car_tag_1'),ref('demo_data_car_tag_3')])]" />
+    </record>
+    <record id="demo_data_hotel_1" model="trip.hotels">
+        <field name="name">Lemon Tree</field>
+        <field name="location">Gandhinagar</field>
+        <field name="cost_per_room">1000</field>
+    </record>
+    <record id="demo_data_hotel_2" model="trip.hotels">
+        <field name="name">The Taj</field>
+        <field name="location">Mumbai</field>
+        <field name="cost_per_room">1500</field>
+    </record>
+    <record id="demo_data_hotel_3" model="trip.hotels">
+        <field name="name">Cama</field>
+        <field name="location">Goa</field>
+        <field name="cost_per_room">1000</field>
+    </record>
+    <record id="demo_data_hotel_4" model="trip.hotels">
+        <field name="name">RiverSight</field>
+        <field name="location">Mumbai</field>
+        <field name="cost_per_room">1000</field>
+    </record>
+    <record id="demo_data_trip_1" model="trip.trip">
+        <field name="destination">Mumbai</field>
+        <field name="distance">500</field>
+        <field name="members">4</field>
+        <field name="car_ids" eval="[(6,0,[ref('demo_data_car_1')])]"/>
+    </record>
+    <record id="demo_data_trip_2" model="trip.trip">
+        <field name="destination">Gandhinagar</field>
+        <field name="distance">30</field>
+        <field name="members">8</field>
+        <field name="car_ids" eval="[(6,0,[ref('demo_data_car_3')])]"/>
+    </record>
+</odoo>
